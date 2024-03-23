@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PantherHub - Sign In</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background: url('/images/A panther using c5bcd355-d07e-410f-a198-94767c31d961.png') center/cover fixed no-repeat, url('/images/A panther using eb594b10-2d22-48b6-96b5-da79606c9184.png') center/cover fixed no-repeat, #f5f5f5;
+    }
+
+    header {
+      background-color: #2c3e50; /* Navy */
+      color: #f0cc00; /* White */
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .signin-container {
+      background-color: #2c3e50; /* Navy */
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      margin-top: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .signin-container h2 {
+      color: #ecf0f1; /* White */
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ecf0f1; /* White */
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #3498db; /* Light Blue */
+      border-radius: 4px;
+      outline: none;
+      color: #333; /* Dark Gray */
+    }
+
+    .signin-button {
+      background-color: #3498db; /* Light Blue */
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .signin-button:hover {
+      background-color: #2980b9; /* Darker Blue */
+    }
+
+    .forgot-password {
+      color: #f39c12; /* Gold */
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 20px;
+      z-index: 1;
+    }
+
+    nav a {
+      color: #e6d92f; /* Dark Gray */
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #ecf0f1; /* Light Gray */
+      color: #2c3e50; /* Navy */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PantherHub</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="signin-container">
+    <h2>Sign In</h2>
+    <form>
+      <div class="input-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="signin-button">Sign In</button>
+    </form>
+    <a href="#" class="forgot-password">Forgot Password?</a>
+  </div>
+</body>
+</html>
