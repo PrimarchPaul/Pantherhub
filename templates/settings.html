@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PantherHub Settings</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #3498db, #f39c12); /* Blue to Gold */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Three columns: equal space, content width, equal space */
+            justify-items: center; /* Center items horizontally */
+            align-items: center; /* Center items vertically */
+            width: 100%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px 20px;
+        }
+
+        h1 {
+            grid-column: 2 / 3; /* Place the title in the center column */
+            margin: 0;
+        }
+
+        .button-container {
+            justify-self: end; /* Align the button container to the end of the grid */
+            grid-column: 3 / 4; /* Place the buttons in the right column */
+        }
+
+        /* This class is used to balance the header layout */
+        .spacer {
+            flex: 1;
+        }
+
+        /* Styles for buttons remain the same */
+        .button-container button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button-container button:hover {
+            background-color: #2980b9;
+        }
+
+        hr {
+            width: 80%;
+            margin: 20px 0;
+            border: 1px solid #ecf0f1; /* Light Gray */
+        }
+
+        .settings-option {
+            width: 80%;
+            max-width: 400px;
+            margin: 20px 0;
+        }
+
+        input[type="button"] {
+            background-color: #3498db; /* Blue */
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="button"]:hover {
+            background-color: #2980b9; /* Darker Blue */
+        }
+
+        #delete-account-btn {
+            background-color: #e74c3c; /* Red */
+        }
+
+        #delete-account-btn:hover {
+            background-color: #c0392b; /* Darker Red */
+        }
+    </style>
+</head>
+<body>
+
+      <header>
+          <div class="spacer"></div>
+      <h1>PantherHub Settings</h1>
+          <div class = "button-container">
+          <button onclick="handleButtonClick('home')">Home</button>
+          <button onclick="handleButtonClick('profile')">Profile</button>
+          </div>
+      </header>
+    <hr>
+
+    <div class="settings-option">
+        <input type="button" id="edit-profile-btn" value="Edit Profile" onclick="handleButtonClick('edit_profile')">
+    </div>
+
+    <div class="settings-option">
+        <input type="button" id="link-social-btn" value="Link Social Media (coming soon)">
+    </div>
+
+    <div class="settings-option">
+        <input type="button" id="pantherhub-training" value="Pantherhub Training (coming soon)" >
+    </div>
+
+    <div class="settings-option">
+        <input type="button" id="ai-assistance" value="AI Assistance (coming soon)">
+    </div>
+
+    <hr>
+
+    <div class="settings-option">
+        <h2>Delete Account</h2>
+        <p>Deleting your account will permanently remove all your data.</p>
+        <input type="button" id="delete-account-btn" value="Delete My Account" onclick="handleButtonClick('delete_account')">
+    </div>
+
+</body>
+<script>
+function handleButtonClick(action) {
+    fetch(`/redirect/${action}`, { method: 'POST' })
+    .then(response => response.json())
+    .then(data => {
+        if(data.redirect) {
+            window.location.href = data.redirectUrl;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+</script>
+</html>

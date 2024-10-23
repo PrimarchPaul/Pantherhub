@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            background-image: url('Pantherhub/static/images/jungle leaves 3.jpeg');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #abdddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-top: 0;
+            text-align: center;
+        }
+        #messages {
+            margin-bottom: 20px;
+        }
+        #messages p {
+            margin: 5px 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
+
+        nav button {
+          color: #fff;
+          text-decoration: none;
+          padding: 10px 20px;
+          margin: 0 10px;
+          border-radius: 5px;
+          background-color: #3498db;
+          transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+          background-color: #2980b9;
+        }
+        input[type="text"],
+        textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1>Your Profile</h1>
+    <nav>
+
+        <button onclick="handleAction('profile')">profile</button>
+        <button onclick="handleAction('to_browse')">Browse</button>
+
+    </nav>
+  </header>
+    <div class="container">
+        <h2>Messages</h2>
+        <div id="messages">
+            {% for message in messages %}
+                <p><b>From {{ message.sender }} to {{ message.recipient }}:</b> {{ message.message }}</p>
+            {% endfor %}
+        </div>
+
+        <h2>Send a Message</h2>
+        <form action="/send" method="POST">
+            <input type="text" name="sender" placeholder="Your name" required>
+            <input type="text" name="recipient" placeholder="Recipient's name" required>
+            <textarea name="message" placeholder="Your message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+   var socket = io();
+
+document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const sender = document.querySelector('input[name="sender"]').value;
+    const recipient = document.querySelector('input[name="recipient"]').value;
+    const message = document.querySelector('textarea[name="message"]').value;
+
+    // Emitting a message to the server
+    socket.emit('chat message', { sender, recipient, message });
+
+    // Clear the message input after sending
+    document.querySelector('textarea[name="message"]').value = '';
+});
+
+// Listening for incoming messages
+socket.on('chat message', function(data) {
+    const messageElement = document.createElement('p');
+    messageElement.innerHTML = `<b>From ${data.sender} to ${data.recipient}:</b> ${data.message}`;
+    document.getElementById('messages').appendChild(messageElement);
+    window.scrollTo(0, document.body.scrollHeight);
+});
+
+function handleAction(action) {
+  fetch(`/redirect/${action}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({})
+  })
+  .then(response => response.json())
+  .then(data => {
+    if(data.redirect) {
+      window.location.href = data.redirectUrl; // Redirect based on the response
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+    </script>
+</html>
